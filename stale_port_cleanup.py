@@ -203,18 +203,21 @@ class CleanStaleResource(object):
                        'subnet_id': subnet_id,
                        'cidr': cidr,
                        'network_id': vn_obj.uuid,
-                       'tenant_id': vn_obj.parent_uuid.replace('-', '')}
+                       'tenant_id': vn_obj.parent_uuid.replace('-', ''),
+                       'vn_obj': vn_obj}
         self.subnets_info.append(subnet_info)
         if not vnc_subnet_id_set:
             self.stale_subnets_info.append(subnet_info)
 
     def _check_stale_subnets(self):
         vn_objs = self._get_all_vns()
+        print("In _check_stale_subnets : No of nets = " + str(len(vn_objs)) + "\n")
         for vn_obj in vn_objs or []:
             ipam_refs = vn_obj.get_network_ipam_refs()
             for ipam_ref in ipam_refs or []:
                 subnet_vncs = ipam_ref['attr'].get_ipam_subnets()
                 for subnet_vnc in subnet_vncs:
+                    print("Getting subnet details for : " + str(subnet_vnc.subnet_uuid) + "\n")
                     self._add_subnet_info(subnet_vnc, vn_obj, ipam_ref['to'])
 
     def check_stale_resources(self):
@@ -232,7 +235,7 @@ class CleanStaleResource(object):
             print 'Stale Ports Info : '
         for stale_port in self.stale_port_info:
             for k, v in stale_port.items():
-                if k == 'vn_obj' or k == 'vmi_obj':
+                if k == 'vn_obj' or k == 'vmi_obj' or k == 'vn_obj':
                     continue
                 print '\t ' + str(k) + ' :' + str(v) + '\n'
             print '*********************************************************\n'
