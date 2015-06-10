@@ -87,4 +87,4 @@ if choice != 'y':
     sys.exit(0)
 
 
-# stale_oc_res.delete_stale_resources()
+stale_oc_res.delete_stale_resources()
