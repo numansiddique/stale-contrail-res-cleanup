@@ -56,7 +56,7 @@ class StalePortCleanup():
         print('Total stale networks found : ' + str(len(self.stale_networks)))
 
         if len(self.stale_networks):
-            print('Below are the stale networks which will be deleted : Please review')
+            print('Below are the stale networks')
             for net_info in self.stale_networks.itervalues():
                 print('**************\n')
                 print('Network Id : ' + net_info['network_id'] + '\n')
@@ -73,17 +73,6 @@ class StalePortCleanup():
                 print("Exception occured in deleting port : " + str(port['id']) +"\n")
                 print("Exception e = " + str(e) + "\n")
 
-        if not self.stale_networks:
-            return
-
-        print("Deleting state networks now")
-        for net_info in self.stale_networks.itervalues():
-            print("Deleting Stale networks : " + net_info['network_id'] + "\n")
-            try:
-                self.client.delete_network(net_info['network_id'])
-            except Exception as e:
-                print("Exception occured in deleting port : " + str(port['id']) +"\n")
-                print("Exception e = " + str(e) + "\n")
 
 
 stale_oc_res = StalePortCleanup()
