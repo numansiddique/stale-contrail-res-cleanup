@@ -13,6 +13,7 @@ class StalePortCleanup():
         # kwargs['endpoint_url'] = os.environ.get('OS_AUTH_URL')
         kwargs['auth_strategy'] = 'keystone'
         kwargs['password'] = os.environ.get('OS_PASSWORD')
+        kwargs['endpoint_type'] = os.environ.get('OS_ENDPOINT_TYPE')
         self.client = NeutronClient(**kwargs)
         self.subnets = []
         self.stale_ports = []
